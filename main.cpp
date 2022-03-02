@@ -3,34 +3,34 @@
 
 using namespace std;
 
-int N = 3;
+int N = 4;
+int M ;
+string gyumik[] = {"afonya", "kajszin", "citrom", "alma", "korte"};
 
-string szinek[] = {"feher", "sarga", "fekete", "piros", "zold"};
-
-bool lehet(vector<string> zaszlo, string ujszin)
+bool lehet(vector<string> ital, string ujgyumi)
 {
-    for(int i=0; i<zaszlo.size(); i++)
+    for(int i=0; i<ital.size(); i++)
     {
-        if(ujszin == zaszlo[i])
+        if(ujgyumi == ital[i])
         {
             return false;
         }
     }
-    if(ujszin == "fekete")
+    if(ujgyumi == "citrom")
     {
-        for(int i=0; i<zaszlo.size(); i++)
+        for(int i=0; i<ital.size(); i++)
         {
-            if(zaszlo[i] == "zold")
+            if(ital[i] == "korte")
             {
                 return false;
             }
         }
     }
-    if(ujszin == "zold")
+    if(ujgyumi == "korte")
     {
-        for(int i=0; i<zaszlo.size(); i++)
+        for(int i=0; i<ital.size(); i++)
         {
-            if(zaszlo[i] == "fekete")
+            if(ital[i] == "citrom")
             {
                 return false;
             }
@@ -39,46 +39,50 @@ bool lehet(vector<string> zaszlo, string ujszin)
 
     return true;
 }
-void kiir(vector<string> zaszlo)
+void kiir(vector<string> ital)
 {
-    for(int i=0; i<zaszlo.size(); i++)
+    for(int i=0; i<ital.size(); i++)
     {
-        cout << zaszlo[i] << " ";
+        cout << ital[i] << " ";
     }
     cout << endl;
     return;
 }
 
-void backtrack(vector<string> zaszlo)
+void backtrack(vector<string> ital)
 {
 
-    if(zaszlo.size() == N)
+    if(ital.size() == M)
     {
+        if(ital[0] == "afonya" && ital[M-1] != "alma"){
+            kiir(ital);
+            return;
+        }
 
-        kiir(zaszlo);
-        return;
     }
 
     for(int i=0; i<5; i++)
     {
-        if(lehet(zaszlo,szinek[i]))
+        if(lehet(ital,gyumik[i]))
         {
-            vector<string>tempzaszlo;
-            for(int j=0; j<zaszlo.size(); j++)
+            vector<string>tempital;
+            for(int j=0; j<ital.size(); j++)
             {
-                tempzaszlo.push_back(zaszlo[j]);
+                tempital.push_back(ital[j]);
             }
-            tempzaszlo.push_back(szinek[i]);
-            backtrack(tempzaszlo);
+            tempital.push_back(gyumik[i]);
+            backtrack(tempital);
         }
     }
 }
 int main()
 {
 
-    vector<string>zaszlo;
-    backtrack(zaszlo);
-
+    vector<string>ital;
+    for(M=2; M<5; M++)
+    {
+        backtrack(ital);
+    }
 
     return 0;
 }
