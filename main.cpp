@@ -5,77 +5,79 @@ using namespace std;
 
 int N = 3;
 
-string kremek[] = {"karamella", "csokolade", "tejszin", "dio", "vanilia"};
+string szinek[] = {"feher", "sarga", "fekete", "piros", "zold"};
 
-bool lehet(vector<string> torta, string ujkrem)
+bool lehet(vector<string> zaszlo, string ujszin)
 {
-    for(int i=0; i<torta.size(); i++)
+    for(int i=0; i<zaszlo.size(); i++)
     {
-        if(ujkrem == torta[i])
+        if(ujszin == zaszlo[i])
         {
             return false;
         }
     }
-    if(ujkrem == "karamella"){
-        for(int i=0; i<torta.size(); i++){
-            if(torta[i] == "dio"){
+    if(ujszin == "fekete")
+    {
+        for(int i=0; i<zaszlo.size(); i++)
+        {
+            if(zaszlo[i] == "zold")
+            {
                 return false;
             }
         }
     }
-    if(ujkrem == "dio"){
-        for(int i=0; i<torta.size(); i++){
-            if(torta[i] == "karamella"){
+    if(ujszin == "zold")
+    {
+        for(int i=0; i<zaszlo.size(); i++)
+        {
+            if(zaszlo[i] == "fekete")
+            {
                 return false;
             }
         }
     }
+
     return true;
 }
-void kiir(vector<string> torta)
+void kiir(vector<string> zaszlo)
 {
-    for(int i=0; i<torta.size(); i++)
+    for(int i=0; i<zaszlo.size(); i++)
     {
-        cout << torta[i] << " ";
+        cout << zaszlo[i] << " ";
     }
     cout << endl;
     return;
 }
 
-void backtrack(vector<string> torta)
+void backtrack(vector<string> zaszlo)
 {
 
-    if(torta.size() == N)
+    if(zaszlo.size() == N)
     {
-        if(torta[0] != "tejszin" && torta[1] != "vanilia" && torta[0] != "vanilia" && torta[1] != "tejszin")
-        {
-            if(torta[N-1] == "tejszin" || torta[N-1] == "vanilia")
-            {
-                kiir(torta);
-                return;
-            }
-        }
+
+        kiir(zaszlo);
+        return;
     }
 
     for(int i=0; i<5; i++)
     {
-        if(lehet(torta,kremek[i]))
+        if(lehet(zaszlo,szinek[i]))
         {
-            vector<string>temptorta;
-            for(int j=0; j<torta.size(); j++)
+            vector<string>tempzaszlo;
+            for(int j=0; j<zaszlo.size(); j++)
             {
-                temptorta.push_back(torta[j]);
+                tempzaszlo.push_back(zaszlo[j]);
             }
-            temptorta.push_back(kremek[i]);
-            backtrack(temptorta);
+            tempzaszlo.push_back(szinek[i]);
+            backtrack(tempzaszlo);
         }
     }
 }
 int main()
 {
 
-    vector<string>torta;
-    backtrack(torta);
+    vector<string>zaszlo;
+    backtrack(zaszlo);
 
 
     return 0;
