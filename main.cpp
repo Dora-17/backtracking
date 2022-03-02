@@ -3,86 +3,80 @@
 
 using namespace std;
 
-int N = 4;
-int M ;
-string gyumik[] = {"afonya", "kajszin", "citrom", "alma", "korte"};
+int N = 3;
 
-bool lehet(vector<string> ital, string ujgyumi)
+string kremek[] = {"karamella", "csokolade", "tejszin", "dio", "vanilia"};
+
+bool lehet(vector<string> torta, string ujkrem)
 {
-    for(int i=0; i<ital.size(); i++)
+    for(int i=0; i<torta.size(); i++)
     {
-        if(ujgyumi == ital[i])
+        if(ujkrem == torta[i])
         {
             return false;
         }
     }
-    if(ujgyumi == "citrom")
-    {
-        for(int i=0; i<ital.size(); i++)
-        {
-            if(ital[i] == "korte")
-            {
+    if(ujkrem == "karamella"){
+        for(int i=0; i<torta.size(); i++){
+            if(torta[i] == "dio"){
                 return false;
             }
         }
     }
-    if(ujgyumi == "korte")
-    {
-        for(int i=0; i<ital.size(); i++)
-        {
-            if(ital[i] == "citrom")
-            {
+    if(ujkrem == "dio"){
+        for(int i=0; i<torta.size(); i++){
+            if(torta[i] == "karamella"){
                 return false;
             }
         }
     }
-
     return true;
 }
-void kiir(vector<string> ital)
+void kiir(vector<string> torta)
 {
-    for(int i=0; i<ital.size(); i++)
+    for(int i=0; i<torta.size(); i++)
     {
-        cout << ital[i] << " ";
+        cout << torta[i] << " ";
     }
     cout << endl;
     return;
 }
 
-void backtrack(vector<string> ital)
+void backtrack(vector<string> torta)
 {
 
-    if(ital.size() == M)
+    if(torta.size() == N)
     {
-        if(ital[0] == "afonya" && ital[M-1] != "alma"){
-            kiir(ital);
-            return;
+        if(torta[0] != "tejszin" && torta[1] != "vanilia" && torta[0] != "vanilia" && torta[1] != "tejszin")
+        {
+            if(torta[N-1] == "tejszin" || torta[N-1] == "vanilia")
+            {
+                kiir(torta);
+                return;
+            }
         }
-
     }
 
     for(int i=0; i<5; i++)
     {
-        if(lehet(ital,gyumik[i]))
+        if(lehet(torta,kremek[i]))
         {
-            vector<string>tempital;
-            for(int j=0; j<ital.size(); j++)
+            vector<string>temptorta;
+            for(int j=0; j<torta.size(); j++)
             {
-                tempital.push_back(ital[j]);
+                temptorta.push_back(torta[j]);
             }
-            tempital.push_back(gyumik[i]);
-            backtrack(tempital);
+            temptorta.push_back(kremek[i]);
+            backtrack(temptorta);
         }
     }
 }
 int main()
 {
 
-    vector<string>ital;
-    for(M=2; M<5; M++)
-    {
-        backtrack(ital);
-    }
+    vector<string>torta;
+    backtrack(torta);
+
 
     return 0;
 }
